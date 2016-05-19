@@ -35,8 +35,15 @@ app.factory('auth', ['$http', '$window','$state', function($http, $window, $stat
      if(auth.isLoggedIn()){
        var token = auth.getToken();
        var decodedToken = JSON.parse($window.atob(token.split('.')[1]));
+
        return decodedToken.username;
      }
+   };
+
+   auth.loggedInUser = function(){
+    var loggedIn = auth.currentUser()
+
+    return loggedIn;
    };
 
    auth.logOut = function(){
