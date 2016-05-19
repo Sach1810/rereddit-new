@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router()
 var mongoose = require('mongoose');
 var passport = require('passport');
+var expressJWT = require('express-jwt');
 
 require('../config/passport');
 
@@ -22,12 +23,14 @@ router.post('/register', function(req, res, next){
 
   user.save(function (err){
     if(err){ return next(err); }
-
     return res.json({token: user.generateJWT()})
   });
 });
 
 router.post('/login', function(req, res, next){
+  console.log(req.body.username);
+  console.log(req.body.password);
+
   if(!req.body.username || !req.body.password){
     return res.status(400).json({message: 'Please fill out all fields'});
   }
